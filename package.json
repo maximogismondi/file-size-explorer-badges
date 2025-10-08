@@ -1,23 +1,71 @@
 {
-  "name": "file-size",
-  "displayName": "File Size",
-  "description": "",
-  "version": "0.0.1",
+  "name": "file-size-explorer-badges",
+  "displayName": "File Size — Explorer Badges",
+  "description": "Show file and folder sizes as Explorer badges with simple size hovers.",
+  "version": "0.1.0",
+  "publisher": "maximo-gismondi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maximogismondi/file-size-explorer-badges"
+  },
+  "bugs": {
+    "url": "https://github.com/maximogismondi/file-size-explorer-badges/issues"
+  },
+  "homepage": "https://github.com/maximogismondi/file-size-explorer-badges#readme",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.104.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "keywords": [
+    "file",
+    "size",
+    "explorer",
+    "decoration",
+    "badge"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onFileSystem:file",
+    "onFileSystem:vscode-remote"
+  ],
   "main": "./out/extension.js",
+  "icon": "icon.png",
   "contributes": {
-    "commands": [
-      {
-        "command": "file-size.helloWorld",
-        "title": "Hello World"
+    "configuration": {
+      "title": "File Size",
+      "properties": {
+        "file-size.scale": {
+          "type": "string",
+          "enum": [
+            "log2",
+            "log10"
+          ],
+          "default": "log2",
+          "description": "Magnitude scale used for unit boundaries and exponent badge: log2 uses KiB/MiB (1024), log10 uses KB/MB (1000)."
+        },
+        "file-size.computeFolders": {
+          "type": "boolean",
+          "default": true,
+          "description": "Compute and show sizes for folders. If disabled, only file sizes are computed and shown."
+        },
+        "file-size.excludeFolders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "node_modules",
+            ".git",
+            "venv",
+            ".venv"
+          ],
+          "markdownDescription": "List of folder names to ignore when computing directory sizes (exact name match). For example: `node_modules`, `venv`, `.venv`, `.git`."
+        }
       }
-    ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
